@@ -4,7 +4,7 @@
  *
  * PHP version 7.3
  *
- * @category async-soap
+ * @category amphp-async-soap
  * @author   Oleg Tikhonov <to@toro.one>
  */
 
@@ -15,7 +15,7 @@ use Amp\Socket\Certificate;
 /**
  * Class Options
  *
- * @category async-soap
+ * @category amphp-async-soap
  * @package  Traff\Soap
  * @author   Oleg Tikhonov <to@toro.one>
  */

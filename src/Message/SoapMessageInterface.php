@@ -4,7 +4,7 @@
  *
  * PHP version 7.3
  *
- * @category async-soap
+ * @category amphp-async-soap
  * @author   Oleg Tikhonov <to@toro.one>
  */
 

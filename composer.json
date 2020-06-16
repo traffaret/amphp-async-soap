@@ -1,5 +1,5 @@
 {
-  "name": "traff-ik/async-soap",
+  "name": "traff-ik/amphp-async-soap",
   "type": "library",
   "description": "",
   "autoload": {

@@ -4,7 +4,7 @@
  *
  * PHP version 7.3
  *
- * @category async-soap
+ * @category amphp-async-soap
  * @author   Oleg Tikhonov <to@toro.one>
  */
 
@@ -17,7 +17,7 @@ use Traff\Soap\RequestBuilder;
 /**
  * Class WsdlPath
  *
- * @category async-soap
+ * @category amphp-async-soap
  * @package  Traff\Soap
  * @author   Oleg Tikhonov <to@toro.one>
  */
