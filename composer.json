@@ -29,8 +29,7 @@
   "require-dev": {
     "phpunit/phpunit": "^9.1",
     "amphp/phpunit-util": "^1.4",
-    "kelunik/loop-block": "^1.0",
-    "swoole/ide-helper": "^4.5"
+    "kelunik/loop-block": "^1.0"
   },
   "license": "MIT",
   "authors": [
