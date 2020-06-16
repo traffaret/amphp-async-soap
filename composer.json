@@ -15,7 +15,6 @@
   "require": {
     "php": ">=7.3",
     "ext-soap": "*",
-    "ext-pcntl": "*",
     "amphp/http-client": "^4.3"
   },
   "require-dev": {
