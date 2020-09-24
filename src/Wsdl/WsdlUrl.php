@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -30,6 +33,11 @@ final class WsdlUrl implements Wsdl
     {
         $this->url = $url;
         $this->builder = $builder;
+    }
+
+    public function __destruct()
+    {
+        unset($this->builder, $this->url);
     }
 
     public function toString(): Promise

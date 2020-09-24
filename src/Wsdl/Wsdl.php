@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -11,7 +14,6 @@
 namespace Traff\Soap\Wsdl;
 
 use Amp\Promise;
-use Traff\Soap\RequestBuilder\RequestBuilder;
 
 /**
  * Class Wsdl
@@ -22,7 +24,5 @@ use Traff\Soap\RequestBuilder\RequestBuilder;
  */
 interface Wsdl
 {
-    public function __construct(string $wsdl, RequestBuilder $builder);
-
     public function toString(): Promise;
 }

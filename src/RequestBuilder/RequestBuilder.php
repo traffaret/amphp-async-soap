@@ -52,6 +52,11 @@ abstract class RequestBuilder
         $this->options = $options;
     }
 
+    public function __destruct()
+    {
+        unset($this->http_method, $this->options, $this->request);
+    }
+
     public function getRequest(): Request
     {
         if (null === $this->request) {
@@ -62,28 +67,30 @@ abstract class RequestBuilder
 
     public function request(string $uri, ?string $body = null, array $input_headers = null): Promise
     {
-        $request = $this->build($uri, $this->options);
+        return call(function () use ($uri, $body, $input_headers): \Generator {
+            $request = $this->build($uri, $this->options);
 
-        $headers = [$input_headers ?? []];
-        $headers[] = $this->getAuthenticationHeaders(
-            $this->options->getLogin(), $this->options->getPassword(), $this->options->getAuthentication()
-        );
-        $headers[] = $this->getHeaders($this->options);
-        $headers = \array_filter($headers);
+            $headers = [$input_headers ?? []];
+            $headers[] = $this->getAuthenticationHeaders(
+                $this->options->getLogin(), $this->options->getPassword(), $this->options->getAuthentication()
+            );
+            $headers[] = $this->getHeaders($this->options);
+            $headers = \array_filter($headers);
 
-        $headers = \array_merge(...$headers);
-        foreach ($headers as [$header, $value]) {
-            $request->addHeader($header, $value);
-        }
+            $headers = \array_merge(...$headers);
+            foreach ($headers as [$header, $value]) {
+                $request->addHeader($header, $value);
+            }
 
-        if (null !== $body) {
-            $request->setBody($body);
-        }
+            if (null !== $body) {
+                $request->setBody($body);
+            }
 
-        $this->request = $request;
+            $this->request = $request;
 
-        return call(function () use ($request): \Generator {
-            $response = yield $this->http_method->request($request);
+            unset($request, $body, $headers);
+
+            $response = yield $this->http_method->request($this->request);
             return yield $response->getBody()->buffer();
         });
     }

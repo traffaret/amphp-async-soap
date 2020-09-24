@@ -1,4 +1,7 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -12,7 +15,6 @@ namespace Traff\Soap\Wsdl;
 
 use Amp\Promise;
 use Amp\Success;
-use Traff\Soap\RequestBuilder;
 
 /**
  * Class WsdlPath
@@ -25,7 +27,7 @@ class WsdlPath implements Wsdl
 {
     private $path;
 
-    public function __construct(string $path, RequestBuilder $builder)
+    public function __construct(string $path)
     {
         $this->path = $path;
     }
