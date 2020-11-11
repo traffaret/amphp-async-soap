@@ -21,5 +21,5 @@ $soap_transport = new SoapTransport(
     new SoapRequestBuilder($http_client, $soap_options)
 );
 
-$result = yield $this->soap_transport->callAsync('GetCursOnDate', [['On_date' => (new \DateTime('now'))->format('Y-m-d')]]);
+$result = yield $soap_transport->callAsync('GetCursOnDate', [['On_date' => (new \DateTime('now'))->format('Y-m-d')]]);
 ```
