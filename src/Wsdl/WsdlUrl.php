@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Created by IntelliJ IDEA.
  *
@@ -11,10 +9,13 @@ declare(strict_types=1);
  * @author   Oleg Tikhonov <to@toro.one>
  */
 
+declare(strict_types=1);
+
 namespace Traff\Soap\Wsdl;
 
 use Amp\Promise;
 use Traff\Soap\RequestBuilder\RequestBuilder;
+
 use function Amp\call;
 
 /**
@@ -42,10 +43,12 @@ final class WsdlUrl implements Wsdl
 
     public function toString(): Promise
     {
-        return call(function (): \Generator {
-            $response = yield $this->builder->request($this->url);
+        return call(
+            function (): \Generator {
+                $response = yield $this->builder->request($this->url);
             // TODO: import externals
-            return sprintf('data://text/plain;base64,%s', base64_encode($response));
-        });
+                return sprintf('data://text/plain;base64,%s', base64_encode($response));
+            }
+        );
     }
 }

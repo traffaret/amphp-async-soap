@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Created by IntelliJ IDEA.
  *
@@ -10,6 +8,8 @@ declare(strict_types=1);
  * @category amphp-async-soap
  * @author   Oleg Tikhonov <to@toro.one>
  */
+
+declare(strict_types=1);
 
 namespace Traff\Soap\RequestBuilder;
 

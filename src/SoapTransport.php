@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Created by IntelliJ IDEA.
  *
@@ -11,12 +9,15 @@ declare(strict_types=1);
  * @author   Oleg Tikhonov <to@toro.one>
  */
 
+declare(strict_types=1);
+
 namespace Traff\Soap;
 
 use Amp\Promise;
 use Amp\Http\Rfc7230;
 use Traff\Soap\Message\SoapMessageInterface;
 use Traff\Soap\RequestBuilder\RequestBuilder;
+
 use function Amp\call;
 
 /**
@@ -70,7 +71,8 @@ final class SoapTransport
         );
     }
 
-    private function getSoapHeaders(int $soap_version, string $action): array {
+    private function getSoapHeaders(int $soap_version, string $action): array
+    {
         $headers = [];
 
         if (Options::SOAP_VERSION_1_1 === $soap_version) {

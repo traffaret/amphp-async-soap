@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * Created by IntelliJ IDEA.
  *
@@ -10,6 +8,8 @@ declare(strict_types=1);
  * @category amphp-async-soap
  * @author   Oleg Tikhonov <to@toro.one>
  */
+
+declare(strict_types=1);
 
 namespace Traff\Soap;
 
@@ -138,10 +138,10 @@ final class Options
         if (empty($cert_file)) {
             throw new \Error('Cert file can not be empty');
         }
-        
+
         $new = clone $this;
         $new->local_cert = new Certificate($cert_file, $key_file);
-        
+
         return $new;
     }
 
@@ -169,7 +169,8 @@ final class Options
 
     public function withCompression($compression): self
     {
-        if (! \in_array($compression, \array_values(self::SOAP_COMPRESSION), true)
+        if (
+            ! \in_array($compression, \array_values(self::SOAP_COMPRESSION), true)
             && ! isset(self::SOAP_COMPRESSION[$compression])
         ) {
             throw new \Error(sprintf('Invalid compression %s', $compression));
@@ -202,16 +203,16 @@ final class Options
     {
         return $this->uri;
     }
-    
-    public function withUri(string $uri): self 
+
+    public function withUri(string $uri): self
     {
         if (empty($uri)) {
             throw new \Error('URI can not be empty');
         }
-        
+
         $new = clone $this;
         $new->uri = $uri;
-        
+
         return $new;
     }
 
@@ -222,8 +223,10 @@ final class Options
 
     public function withStyle($style): self
     {
-        if (! \in_array($style, \array_values(self::SOAP_STYLE), true)
-            && ! isset(self::SOAP_STYLE[$style])) {
+        if (
+            ! \in_array($style, \array_values(self::SOAP_STYLE), true)
+            && ! isset(self::SOAP_STYLE[$style])
+        ) {
             throw new \Error(sprintf('SOAP style %s not allowed', $style));
         }
 

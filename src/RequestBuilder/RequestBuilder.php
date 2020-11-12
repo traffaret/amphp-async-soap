@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+
 /**
  * Created by IntelliJ IDEA.
  *
@@ -8,12 +9,15 @@
  * @author   Oleg Tikhonov <to@toro.one>
  */
 
+declare(strict_types=1);
+
 namespace Traff\Soap\RequestBuilder;
 
 use Amp\Http\Client\HttpClient;
 use Amp\Http\Client\Request;
 use Amp\Promise;
 use Traff\Soap\Options;
+
 use function Amp\call;
 
 /**
@@ -67,31 +71,35 @@ abstract class RequestBuilder
 
     public function request(string $uri, ?string $body = null, array $input_headers = null): Promise
     {
-        return call(function () use ($uri, $body, $input_headers): \Generator {
-            $request = $this->build($uri, $this->options);
+        return call(
+            function () use ($uri, $body, $input_headers): \Generator {
+                $request = $this->build($uri, $this->options);
 
-            $headers = [$input_headers ?? []];
-            $headers[] = $this->getAuthenticationHeaders(
-                $this->options->getLogin(), $this->options->getPassword(), $this->options->getAuthentication()
-            );
-            $headers[] = $this->getHeaders($this->options);
-            $headers = \array_filter($headers);
+                $headers = [$input_headers ?? []];
+                $headers[] = $this->getAuthenticationHeaders(
+                    $this->options->getLogin(),
+                    $this->options->getPassword(),
+                    $this->options->getAuthentication()
+                );
+                $headers[] = $this->getHeaders($this->options);
+                $headers = \array_filter($headers);
 
-            $headers = \array_merge(...$headers);
-            foreach ($headers as [$header, $value]) {
-                $request->addHeader($header, $value);
+                $headers = \array_merge(...$headers);
+                foreach ($headers as [$header, $value]) {
+                    $request->addHeader($header, $value);
+                }
+
+                if (null !== $body) {
+                    $request->setBody($body);
+                }
+
+                $this->request = $request;
+
+                unset($request, $body, $headers);
+
+                $response = yield $this->http_method->request($this->request);
+                return yield $response->getBody()->buffer();
             }
-
-            if (null !== $body) {
-                $request->setBody($body);
-            }
-
-            $this->request = $request;
-
-            unset($request, $body, $headers);
-
-            $response = yield $this->http_method->request($this->request);
-            return yield $response->getBody()->buffer();
-        });
+        );
     }
 }
