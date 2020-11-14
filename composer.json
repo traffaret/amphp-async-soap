@@ -20,6 +20,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "Traff\\Soap\\Test\\Unit\\": "tests/unit",
       "Traff\\Soap\\Test\\Functional\\": "tests/functional"
     }
   },
@@ -30,6 +31,7 @@
   },
   "require-dev": {
     "amphp/phpunit-util": "^1.4",
+    "mockery/mockery": "^1.4",
     "phpunit/phpunit": "^9.4",
     "squizlabs/php_codesniffer": "^3.5"
   },

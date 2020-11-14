@@ -3,6 +3,10 @@
      bootstrap="vendor/autoload.php"
      colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
 >
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener"/>
+    </listeners>
+
     <coverage>
         <include>
             <directory>./src/</directory>
