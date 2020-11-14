@@ -20,6 +20,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "Traff\\Soap\\Test\\": "tests",
       "Traff\\Soap\\Test\\Unit\\": "tests/unit",
       "Traff\\Soap\\Test\\Functional\\": "tests/functional"
     }
