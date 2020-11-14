@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Traff\Soap\Test\Unit\Message;
 
 use Traff\Soap\Message\DefaultSoapMessageFactory;
-use Mockery as m;
-use Traff\Soap\Message\SoapMessage;
 use Traff\Soap\Message\SoapMessageInterface;
 use Traff\Soap\Options;
 
@@ -30,19 +28,18 @@ class DefaultSoapMessageFactoryTest extends \Mockery\Adapter\Phpunit\MockeryTest
      * createMessage.
      *
      * @covers \Traff\Soap\Message\DefaultSoapMessageFactory::createMessage
-     * @uses \Traff\Soap\Options
+     * @uses \Traff\Soap\Options::withUri()
+     * @uses \Traff\Soap\Options::withLocation()
      *
+     * @throws \SoapFault
      * @return void
      */
     public function testCreateMessage(): void
     {
         $factory = new DefaultSoapMessageFactory();
-        $options = new Options();
+        $options = (new Options())->withUri('uri:unittest')->withLocation('http://location');
 
-        $message_mock = m::mock('overload:' . SoapMessage::class, SoapMessageInterface::class);
-
-        $message_mock->expects('__construct')->with(null, m::type('array'));
-
-        $factory->createMessage(null, $options);
+        /** @noinspection UnnecessaryAssertionInspection */
+        self::assertInstanceOf(SoapMessageInterface::class, $factory->createMessage(null, $options));
     }
 }
