@@ -1,0 +1,52 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="imageTag" value="amphp-soap" />
+        <option name="buildArgs">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="composer_cache" />
+              <option name="value" value="/usr/.composer/cache" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="buildCliOptions" value="" />
+        <option name="command" value="" />
+        <option name="containerName" value="amphp-soap" />
+        <option name="entrypoint" value="" />
+        <option name="commandLineOptions" value="-v vendor-data:/usr/app/vendor" />
+        <option name="sourceFilePath" value="Dockerfile" />
+        <option name="volumeBindings">
+          <list>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/app/src" />
+              <option name="hostPath" value="$PROJECT_DIR$/src" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/app/tests" />
+              <option name="hostPath" value="$PROJECT_DIR$/tests" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/app/phpunit.xml.dist" />
+              <option name="hostPath" value="$PROJECT_DIR$/phpunit.xml.dist" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/app/phpcs.xml.dist" />
+              <option name="hostPath" value="$PROJECT_DIR$/phpcs.xml.dist" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/app/composer.json" />
+              <option name="hostPath" value="$PROJECT_DIR$/composer.json" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/app/composer.lock" />
+              <option name="hostPath" value="$PROJECT_DIR$/composer.lock" />
+            </DockerVolumeBindingImpl>
+          </list>
+        </option>
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>
