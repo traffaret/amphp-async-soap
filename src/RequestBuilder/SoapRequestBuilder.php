@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Traff\Soap\RequestBuilder;
 
+use Amp\CancellationToken;
 use Amp\Http\Client\Request;
+use Amp\NullCancellationToken;
 use Traff\Soap\Options;
 
 /**
- * Class SoapRequestBuilder
+ * SOAP request builder.
  *
  * @category amphp-async-soap
  * @package  Traff\Soap
@@ -25,16 +27,19 @@ use Traff\Soap\Options;
  */
 final class SoapRequestBuilder extends RequestBuilder
 {
+    /** @inheritDoc */
     public function build(string $uri, Options $options): Request
     {
-        $request = new Request($uri, 'POST');
-        $request->setTcpConnectTimeout(20000); // TODO:
-        $request->setTransferTimeout(20000); // TODO:
-        $request->setInactivityTimeout(20000); // TODO:
-        $request->setTlsHandshakeTimeout(20000); // TODO:
-        return $request;
+        return new Request($uri, 'POST');
     }
 
+    /** @inheritDoc */
+    public function createRequestCancellationToken(): CancellationToken
+    {
+        return new NullCancellationToken();
+    }
+
+    /** @inheritDoc */
     protected function getHeaders(Options $options): array
     {
         return [];

@@ -13,11 +13,13 @@ declare(strict_types=1);
 
 namespace Traff\Soap\RequestBuilder;
 
+use Amp\CancellationToken;
 use Amp\Http\Client\Request;
+use Amp\NullCancellationToken;
 use Traff\Soap\Options;
 
 /**
- * Class WsdlRequestBuilder
+ * WSDL request builder.
  *
  * @category amphp-async-soap
  * @package  Traff\Soap
@@ -25,11 +27,19 @@ use Traff\Soap\Options;
  */
 class WsdlRequestBuilder extends RequestBuilder
 {
+    /** @inheritDoc */
     public function build(string $uri, Options $options): Request
     {
         return new Request($uri, 'GET');
     }
 
+    /** @inheritDoc */
+    public function createRequestCancellationToken(): CancellationToken
+    {
+        return new NullCancellationToken();
+    }
+
+    /** @inheritDoc */
     protected function getHeaders(Options $options): array
     {
         return [
