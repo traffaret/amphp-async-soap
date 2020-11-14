@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Traff\Soap\Message;
 
 /**
- * Class SoapMessage
+ * SOAP client wrapper.
  *
  * @category amphp-async-soap
  * @package  Traff\Soap
@@ -22,13 +22,23 @@ namespace Traff\Soap\Message;
  */
 final class SoapMessage extends \SoapClient implements SoapMessageInterface
 {
+    /** @var string|null */
     private $response;
+
+    /** @var string|null */
     private $request;
+
+    /** @var string|null */
     private $action;
+
+    /** @var int|null */
     private $version;
+
+    /** @var string|null */
     private $soap_location;
 
-    public function __doRequest($request, $location, $action, $version, $one_way = 0)
+    /** @inheritDoc */
+    public function __doRequest($request, $location, $action, $version, $one_way = 0): string
     {
         $result = '';
 
@@ -44,29 +54,39 @@ final class SoapMessage extends \SoapClient implements SoapMessageInterface
         return $result;
     }
 
+    /** @inheritDoc */
     public function getLocation(): ?string
     {
         return $this->soap_location;
     }
 
+    /** @inheritDoc */
     public function getAction(): ?string
     {
         return $this->action;
     }
 
+    /** @inheritDoc */
     public function getRequest(): ?string
     {
         return $this->request;
     }
 
+    /** @inheritDoc */
     public function getVersion(): ?int
     {
         return $this->version;
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @throws \SoapFault
+     */
     public function request(string $func_name, array $arguments): SoapMessageInterface
     {
         $this->__soapCall($func_name, $arguments);
+
         if (isset($this->__soap_fault) && $this->__soap_fault instanceof \SoapFault) {
             throw $this->__soap_fault;
         }
@@ -74,11 +94,18 @@ final class SoapMessage extends \SoapClient implements SoapMessageInterface
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @throws \SoapFault
+     */
     public function response(string $response, string $func_name)
     {
         $this->response = $response;
+
         try {
             $response = $this->__soapCall($func_name, []);
+
             if ($response instanceof \SoapFault) {
                 throw $response;
             }
