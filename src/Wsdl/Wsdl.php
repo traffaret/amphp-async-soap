@@ -22,5 +22,10 @@ use Amp\Promise;
  */
 interface Wsdl
 {
+    /**
+     * WSDL string representation for the SOAP client.
+     *
+     * @return \Amp\Promise<string>
+     */
     public function toString(): Promise;
 }
