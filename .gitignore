@@ -1,6 +1,7 @@
+*.cache
 *.iml
 .idea
 /bin/
-composer.phar
-composer.lock
 /vendor/
+composer.lock
+composer.phar
