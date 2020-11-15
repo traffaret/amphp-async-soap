@@ -9,6 +9,8 @@
  * @author   Oleg Tikhonov <to@toro.one>
  */
 
+/** @noinspection PhpUnused */
+
 declare(strict_types=1);
 
 namespace Traff\Soap;
@@ -25,67 +27,295 @@ use Amp\Socket\Certificate;
 final class Options
 {
     public const SOAP_ENCODING_UTF_8 = 'utf-8';
-    public const SOAP_VERSION_1_1 = \SOAP_1_1;
-    public const SOAP_VERSION_1_2 = \SOAP_1_2;
-    public const SOAP_COMPRESSION_GZIP = 'gzip';
-    public const SOAP_COMPRESSION_ACCEPT = 'accept';
-    public const SOAP_COMPRESSION_DEFLATE = 'deflate';
-    public const SOAP_STYLE_RPC = 'rpc';
-    public const SOAP_STYLE_DOCUMENT = 'document';
-    public const SOAP_USE_ENCODED = \SOAP_ENCODED;
-    public const SOAP_USE_LITERAL = \SOAP_LITERAL;
-    public const SOAP_AUTHENTICATION_BASIC = \SOAP_AUTHENTICATION_BASIC;
-    public const SOAP_AUTHENTICATION_DIGEST = \SOAP_AUTHENTICATION_DIGEST;
-    public const SOAP_STYLE = [
-        self::SOAP_STYLE_RPC => \SOAP_RPC,
-        self::SOAP_STYLE_DOCUMENT => \SOAP_DOCUMENT,
-    ];
-    public const SOAP_COMPRESSION = [
-        self::SOAP_COMPRESSION_GZIP => \SOAP_COMPRESSION_GZIP,
-        self::SOAP_COMPRESSION_ACCEPT => \SOAP_COMPRESSION_ACCEPT,
-        self::SOAP_COMPRESSION_DEFLATE => \SOAP_COMPRESSION_DEFLATE,
-    ];
 
+    public const SOAP_VERSION_1_1 = \SOAP_1_1;
+
+    public const SOAP_VERSION_1_2 = \SOAP_1_2;
+
+    public const SOAP_COMPRESSION_GZIP = \SOAP_COMPRESSION_GZIP;
+
+    public const SOAP_COMPRESSION_ACCEPT = \SOAP_COMPRESSION_ACCEPT;
+
+    public const SOAP_COMPRESSION_DEFLATE = \SOAP_COMPRESSION_DEFLATE;
+
+    public const SOAP_STYLE_RPC = \SOAP_RPC;
+
+    public const SOAP_STYLE_DOCUMENT = \SOAP_DOCUMENT;
+
+    public const SOAP_USE_ENCODED = \SOAP_ENCODED;
+
+    public const SOAP_USE_LITERAL = \SOAP_LITERAL;
+
+    public const SOAP_AUTHENTICATION_BASIC = \SOAP_AUTHENTICATION_BASIC;
+
+    public const SOAP_AUTHENTICATION_DIGEST = \SOAP_AUTHENTICATION_DIGEST;
+
+    /** @var string|null */
     private $location;
+
+    /** @var int */
     private $soap_version = self::SOAP_VERSION_1_1;
+
+    /** @var string|null */
     private $login;
+
+    /** @var string|null */
     private $password;
+
+    /** @var \Amp\Socket\Certificate|null */
     private $local_cert;
+
+    /** @var int */
     private $authentication = self::SOAP_AUTHENTICATION_BASIC;
-    private $compression = \SOAP_COMPRESSION_GZIP;
-    private $user_agent = 'soap-async';
-    private $style = \SOAP_RPC;
+
+    /** @var int */
+    private $compression = self::SOAP_COMPRESSION_GZIP;
+
+    /** @var string */
+    private $user_agent = 'traff-soap-async';
+
+    /** @var int */
+    private $style = self::SOAP_STYLE_RPC;
+
+    /** @var string|null */
     private $uri;
-    private $classmap = [];
-    private $typemap = [];
+
+    /** @var bool */
     private $exceptions = false;
+
+    /** @var int */
     private $cache_wsdl = \WSDL_CACHE_NONE;
+
+    /** @var string */
     private $encoding = self::SOAP_ENCODING_UTF_8;
+
+    /** @var int */
     private $use = self::SOAP_USE_LITERAL;
+
+    /** @var string|null */
     private $passphrase;
 
+    /** @var int */
+    private $connection_timeout = 10;
+
+    /**
+     * Connection timeout.
+     *
+     * @return int
+     */
+    public function getConnectionTimeout(): int
+    {
+        return $this->connection_timeout;
+    }
+
+    /**
+     * Service location.
+     *
+     * @return string|null
+     */
     public function getLocation(): ?string
     {
         return $this->location;
     }
 
-    public function withLocation(string $location): self
-    {
-        $new = clone $this;
-        $new->location = $location;
-
-        return $new;
-    }
-
+    /**
+     * SOAP version.
+     *
+     * @return int
+     */
     public function getSoapVersion(): int
     {
         return $this->soap_version;
     }
 
+    /**
+     * Login.
+     *
+     * @return string|null
+     */
+    public function getLogin(): ?string
+    {
+        return $this->login;
+    }
+
+    /**
+     * Password.
+     *
+     * @return string|null
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    /**
+     * SSL certificate.
+     *
+     * @return \Amp\Socket\Certificate|null
+     */
+    public function getLocalCert(): ?Certificate
+    {
+        return $this->local_cert;
+    }
+
+    /**
+     * Authentication type.
+     *
+     * @return int
+     */
+    public function getAuthentication(): int
+    {
+        return $this->authentication;
+    }
+
+    /**
+     * Compression type.
+     *
+     * @return int
+     */
+    public function getCompression(): int
+    {
+        return $this->compression;
+    }
+
+    /**
+     * User agent.
+     *
+     * @return string
+     */
+    public function getUserAgent(): string
+    {
+        return $this->user_agent;
+    }
+
+    /**
+     * URI.
+     *
+     * @return string|null
+     */
+    public function getUri(): ?string
+    {
+        return $this->uri;
+    }
+
+    /**
+     * SOAP document style.
+     *
+     * @return int
+     */
+    public function getStyle(): int
+    {
+        return $this->style;
+    }
+
+    /**
+     * WSDL cache type.
+     *
+     * @return int
+     */
+    public function getCacheWsdl(): int
+    {
+        return $this->cache_wsdl;
+    }
+
+    /**
+     * Exceptions.
+     *
+     * @return bool
+     */
+    public function getExceptions(): bool
+    {
+        return $this->exceptions;
+    }
+
+    /**
+     * Encoding.
+     *
+     * @return string
+     */
+    public function getEncoding(): string
+    {
+        return $this->encoding;
+    }
+
+    /**
+     * Use type.
+     *
+     * @return int
+     */
+    public function getUse(): int
+    {
+        return $this->use;
+    }
+
+    /**
+     * Certificate passphrase.
+     *
+     * @return string|null
+     */
+    public function getPassphrase(): ?string
+    {
+        return $this->passphrase;
+    }
+
+    /**
+     * Check basic authentication type.
+     *
+     * @return bool
+     */
+    public function isBasicAuthentication(): bool
+    {
+        return self::SOAP_AUTHENTICATION_BASIC === $this->authentication;
+    }
+
+    /**
+     * Check digest authentication type.
+     *
+     * @return bool
+     */
+    public function isDigestAuthentication(): bool
+    {
+        return self::SOAP_AUTHENTICATION_DIGEST === $this->authentication;
+    }
+
+    /**
+     * Check SOAP version.
+     *
+     * @param int $version SOAP version to check.
+     *
+     * @return bool
+     */
+    public function isSoapVersion(int $version): bool
+    {
+        return $version === $this->getSoapVersion();
+    }
+
+    /**
+     * Return instance with specified connection timeout.
+     *
+     * @param int $timeout Connection timeout.
+     *
+     * @return self
+     */
+    public function withConnectionTimeout(int $timeout): self
+    {
+        $new = clone $this;
+        $new->connection_timeout = $timeout;
+
+        return $new;
+    }
+
+    /**
+     * Return instance with specified soap version.
+     *
+     * @param int $soap_version SOAP version.
+     *
+     * @return self
+     */
     public function withSoapVersion(int $soap_version): self
     {
         if (! \in_array($soap_version, [self::SOAP_VERSION_1_1, self::SOAP_VERSION_1_2], true)) {
-            throw new \Error(sprintf('Soap version %s not allowed', $soap_version));
+            throw new \InvalidArgumentException(sprintf('Soap version %s not allowed', $soap_version));
         }
 
         $new = clone $this;
@@ -94,15 +324,17 @@ final class Options
         return $new;
     }
 
-    public function getLogin(): ?string
-    {
-        return $this->login;
-    }
-
+    /**
+     * Return instance with specified login.
+     *
+     * @param string $login Login.
+     *
+     * @return self
+     */
     public function withLogin(string $login): self
     {
         if (empty($login)) {
-            throw new \Error('Login can not be empty');
+            throw new \InvalidArgumentException('Login can not be empty');
         }
 
         $new = clone $this;
@@ -111,15 +343,17 @@ final class Options
         return $new;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
+    /**
+     * Return instance with specified password.
+     *
+     * @param string $password Password.
+     *
+     * @return self
+     */
     public function withPassword(string $password): self
     {
         if (empty($password)) {
-            throw new \Error('Password can not be empty');
+            throw new \InvalidArgumentException('Password can not be empty');
         }
 
         $new = clone $this;
@@ -128,15 +362,18 @@ final class Options
         return $new;
     }
 
-    public function getLocalCert(): ?Certificate
-    {
-        return $this->local_cert;
-    }
-
+    /**
+     * Return instance with specified certificate.
+     *
+     * @param string      $cert_file Certificate file location.
+     * @param string|null $key_file  Certificate file with key location.
+     *
+     * @return $this
+     */
     public function withCertificate(string $cert_file, string $key_file = null): self
     {
         if (empty($cert_file)) {
-            throw new \Error('Cert file can not be empty');
+            throw new \InvalidArgumentException('Cert file can not be empty');
         }
 
         $new = clone $this;
@@ -145,15 +382,17 @@ final class Options
         return $new;
     }
 
-    public function getAuthentication(): int
-    {
-        return $this->authentication;
-    }
-
+    /**
+     * Return instance with specified authentication type.
+     *
+     * @param int $authentication Authentication type.
+     *
+     * @return self
+     */
     public function withAuthentication(int $authentication): self
     {
         if (! \in_array($authentication, [\SOAP_AUTHENTICATION_BASIC, \SOAP_AUTHENTICATION_DIGEST], true)) {
-            throw new \Error('Invalid authentication method');
+            throw new \InvalidArgumentException('Invalid authentication method');
         }
 
         $new = clone $this;
@@ -162,35 +401,32 @@ final class Options
         return $new;
     }
 
-    public function getCompression(): int
+    /**
+     * Return instance with specified compression method.
+     *
+     * @param int $compression Compression method.
+     *
+     * @return self
+     */
+    public function withCompression(int $compression): self
     {
-        return $this->compression;
-    }
-
-    public function withCompression($compression): self
-    {
-        if (
-            ! \in_array($compression, \array_values(self::SOAP_COMPRESSION), true)
-            && ! isset(self::SOAP_COMPRESSION[$compression])
-        ) {
-            throw new \Error(sprintf('Invalid compression %s', $compression));
-        }
-
         $new = clone $this;
-        $new->compression = self::SOAP_COMPRESSION[$compression] ?? $compression;
+        $new->compression = $compression;
 
         return $new;
     }
 
-    public function getUserAgent(): string
-    {
-        return $this->user_agent;
-    }
-
+    /**
+     * Return instance with specified user agent.
+     *
+     * @param string $user_agent User agent.
+     *
+     * @return self
+     */
     public function withUserAgent(string $user_agent): self
     {
         if (empty($user_agent)) {
-            throw new \Error('User agent can not be empty');
+            throw new \InvalidArgumentException('User agent can not be empty');
         }
 
         $new = clone $this;
@@ -199,15 +435,17 @@ final class Options
         return $new;
     }
 
-    public function getUri(): ?string
-    {
-        return $this->uri;
-    }
-
+    /**
+     * Return instance with specified URI.
+     *
+     * @param string $uri URI.
+     *
+     * @return self
+     */
     public function withUri(string $uri): self
     {
         if (empty($uri)) {
-            throw new \Error('URI can not be empty');
+            throw new \InvalidArgumentException('URI can not be empty');
         }
 
         $new = clone $this;
@@ -216,62 +454,37 @@ final class Options
         return $new;
     }
 
-    public function getStyle(): int
+    /**
+     * Return instance with specified style type.
+     *
+     * @param int $style Style.
+     *
+     * @return self
+     */
+    public function withStyle(int $style): self
     {
-        return $this->style;
-    }
-
-    public function withStyle($style): self
-    {
-        if (
-            ! \in_array($style, \array_values(self::SOAP_STYLE), true)
-            && ! isset(self::SOAP_STYLE[$style])
-        ) {
-            throw new \Error(sprintf('SOAP style %s not allowed', $style));
+        if (! \in_array($style, [self::SOAP_STYLE_RPC, self::SOAP_STYLE_DOCUMENT], true)) {
+            throw new \InvalidArgumentException(\sprintf('Invalid style value "%s"', $style));
         }
 
         $new = clone $this;
-        $this->style = self::SOAP_STYLE[$style] ?? $style;
+        $this->style = $style;
 
         return $new;
     }
 
-    public function getClassMap(): array
-    {
-        return $this->classmap;
-    }
-
-    public function withClassMap(array $classmap): self
-    {
-        $new = clone $this;
-        $new->classmap = $classmap;
-
-        return $new;
-    }
-
-    public function getTypeMap(): array
-    {
-        return $this->typemap;
-    }
-
-    public function withTypeMap(array $typemap): self
-    {
-        $new = clone $this;
-        $new->typemap = $typemap;
-
-        return $new;
-    }
-
-    public function getCacheWsdl(): int
-    {
-        return $this->cache_wsdl;
-    }
-
+    /**
+     * Return instance with specified wsdl cache method.
+     *
+     * @param int $cache_wsdl WSDL cache method.
+     *
+     * @return self
+     */
     public function withCacheWsdl(int $cache_wsdl): self
     {
         $allowed = [\WSDL_CACHE_NONE, \WSDL_CACHE_BOTH, \WSDL_CACHE_DISK, \WSDL_CACHE_MEMORY];
         if (! \in_array($cache_wsdl, $allowed, true)) {
-            throw new \Error(sprintf('Cache wsdl option %s not allowed', $cache_wsdl));
+            throw new \InvalidArgumentException(sprintf('Cache wsdl option %s not allowed', $cache_wsdl));
         }
 
         $new = clone $this;
@@ -280,28 +493,43 @@ final class Options
         return $new;
     }
 
-    public function getExceptions(): bool
-    {
-        return $this->exceptions;
-    }
-
-    public function withExceptions(bool $exceptions): self
+    /**
+     * Return instance with exceptions.
+     *
+     * @return self
+     */
+    public function withExceptions(): self
     {
         $new = clone $this;
-        $new->exceptions = $exceptions;
+        $new->exceptions = true;
 
         return $new;
     }
 
-    public function getEncoding(): string
+    /**
+     * Return instance without specified exceptions.
+     *
+     * @return self
+     */
+    public function withoutExceptions(): self
     {
-        return $this->encoding;
+        $new = clone $this;
+        $new->exceptions = false;
+
+        return $new;
     }
 
+    /**
+     * Return instance with specified encoding.
+     *
+     * @param string $encoding Encoding.
+     *
+     * @return self
+     */
     public function withEncoding(string $encoding): self
     {
         if (empty($encoding)) {
-            throw new \Error('Encoding can not be empty');
+            throw new \InvalidArgumentException('Encoding can not be empty');
         }
 
         $new = clone $this;
@@ -310,16 +538,18 @@ final class Options
         return $new;
     }
 
-    public function getUse(): int
-    {
-        return $this->use;
-    }
-
+    /**
+     * Return instance with specified use type.
+     *
+     * @param int $use
+     *
+     * @return self
+     */
     public function withUse(int $use): self
     {
         $allowed = [self::SOAP_USE_LITERAL, self::SOAP_USE_ENCODED];
         if (! \in_array($use, $allowed, true)) {
-            throw new \Error(sprintf('Invalid use option %s', $use));
+            throw new \InvalidArgumentException(sprintf('Invalid use option %s', $use));
         }
 
         $new = clone $this;
@@ -328,15 +558,17 @@ final class Options
         return $new;
     }
 
-    public function getPassphrase(): ?string
-    {
-        return $this->passphrase;
-    }
-
+    /**
+     * Return instance with specified passphrase for the certificate file.
+     *
+     * @param string $passphrase Passphrase.
+     *
+     * @return self
+     */
     public function withPassphrase(string $passphrase): self
     {
         if (empty($passphrase)) {
-            throw new \Error('Passphrase can not be empty');
+            throw new \InvalidArgumentException('Passphrase can not be empty');
         }
 
         $new = clone $this;
@@ -345,24 +577,29 @@ final class Options
         return $new;
     }
 
-    public function isBasicAuthentication(): bool
+    /**
+     * Return instance with specified location.
+     *
+     * @param string $location Location.
+     *
+     * @return self
+     */
+    public function withLocation(string $location): self
     {
-        return self::SOAP_AUTHENTICATION_BASIC === $this->authentication;
+        $new = clone $this;
+        $new->location = $location;
+
+        return $new;
     }
 
-    public function isDigestAuthentication(): bool
-    {
-        return self::SOAP_AUTHENTICATION_DIGEST === $this->authentication;
-    }
-
-    public function isSoapVersion(int $version): bool
-    {
-        return $version === $this->getSoapVersion();
-    }
-
+    /**
+     * Return array for the SOAP client options representation.
+     *
+     * @return array
+     */
     public function toArray(): array
     {
-        $context = [];
+        $stream_context = [];
         $array_options = [
             'soap_version' => $this->getSoapVersion(),
             'cache_wsdl' => $this->getCacheWsdl(),
@@ -371,6 +608,7 @@ final class Options
             'encoding' => $this->getEncoding(),
             'use' => $this->getUse(),
             'exceptions' => $this->getExceptions(),
+            'connection_timeout' => $this->getConnectionTimeout(),
         ];
 
         if (null !== $this->getPassword() && null !== $this->getLogin()) {
@@ -378,20 +616,29 @@ final class Options
             $array_options['password'] = $this->getPassword();
             $array_options['authentication'] = $this->getAuthentication();
         }
+
         if (null !== $this->getLocalCert()) {
-            $context['ssl'] = ['local_cert' => $this->getLocalCert()->getCertFile()];
+            $stream_context['ssl'] = ['local_cert' => $this->getLocalCert()->getCertFile()];
+
             if ($this->getLocalCert()->getCertFile() !== $this->getLocalCert()->getKeyFile()) {
-                $context['ssl']['local_pk'] = $this->getLocalCert()->getKeyFile();
+                $stream_context['ssl']['local_pk'] = $this->getLocalCert()->getKeyFile();
             }
         }
+
+        if (null !== $this->getPassphrase()) {
+            $array_options['passphrase'] = $this->getPassphrase();
+        }
+
         if (null !== $this->getLocation()) {
             $array_options['location'] = $this->getLocation();
         }
+
         if (null !== $this->getUri()) {
             $array_options['uri'] = $this->getUri();
         }
-        if (! empty($context)) {
-            $array_options['context'] = \stream_context_create($context);
+
+        if (! empty($stream_context)) {
+            $array_options['context'] = \stream_context_create($stream_context);
         }
 
         return $array_options;
