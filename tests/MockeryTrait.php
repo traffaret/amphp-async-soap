@@ -3,10 +3,10 @@
 /**
  * Created by IntelliJ IDEA.
  *
- * PHP version 7.4
+ * PHP version 7.3
  *
  * @category amphp-async-soap
- * @author   Oleg Tikhonov <o.tikhonov@nexta.pro>
+ * @author   Oleg Tikhonov <to@toro.one>
  */
 
 declare(strict_types=1);

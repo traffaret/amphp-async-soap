@@ -1,6 +1,6 @@
 FROM php:7.3-cli-alpine
 
-LABEL maintainer="Oleg Tikhonov <o.tikhonov@nexta.pro>"
+LABEL maintainer="Oleg Tikhonov <to@toro.one>"
 
 ARG composer_cache="/usr/.composer/cache"
 
