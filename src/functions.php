@@ -30,4 +30,3 @@ function plainWsdl(string $wsdl): string
 
     return $wsdl;
 }
- 

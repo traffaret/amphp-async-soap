@@ -52,7 +52,8 @@ class SoapTransportTest extends AsyncTestCase
      */
     public function testItCanSendRequestThroughCall(): \Generator
     {
-        $result = yield $this->soap_transport->callAsync('GetCursOnDate',
+        $result = yield $this->soap_transport->callAsync(
+            'GetCursOnDate',
             [
                 ['On_date' => (new \DateTime('now'))->format('Y-m-d')]
             ]
