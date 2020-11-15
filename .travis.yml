@@ -1,6 +1,5 @@
 language: php
 php:
-  - "7.2"
   - "7.3"
   - "7.4"
   - "nightly"
@@ -23,7 +22,7 @@ install:
   - composer install -n
 
 before_script:
-  - cc-test-reporter before-build
+  - ./cc-test-reporter before-build
 
 script:
   - composer code-style
@@ -35,4 +34,4 @@ cache:
     - $HOME/.composer/cache/files
 
 after_script:
-  - cc-test-reporter after-build -t clover
+  - ./cc-test-reporter after-build -t clover
