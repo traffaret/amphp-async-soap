@@ -1,0 +1,38 @@
+language: php
+php:
+  - "7.2"
+  - "7.3"
+  - "7.4"
+  - "nightly"
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=${CC_REPORTER_ID}
+
+matrix:
+  allow_failures:
+    - php: nightly
+  fast_finish: true
+
+before_install:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+
+install:
+  - export CI_COMMITTED_AT=$(git log -1 --pretty=format:%ct);
+  - composer install -n
+
+before_script:
+  - cc-test-reporter before-build
+
+script:
+  - composer code-style
+  - composer test:with-coverage
+  - composer test -- --testsuite functional
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+after_script:
+  - cc-test-reporter after-build -t clover
