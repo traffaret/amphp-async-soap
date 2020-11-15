@@ -17,6 +17,7 @@ use Amp\Promise;
 use Traff\Soap\RequestBuilder\RequestBuilder;
 
 use function Amp\call;
+use function Traff\Soap\plainWsdl;
 
 /**
  * Class WsdlUrl
@@ -59,8 +60,7 @@ final class WsdlUrl implements Wsdl
     {
         return call(
             function (): \Generator {
-                $response = yield $this->builder->request($this->url);
-                return sprintf('data://text/plain;base64,%s', base64_encode($response));
+                return plainWsdl(yield $this->builder->request($this->url));
             }
         );
     }
