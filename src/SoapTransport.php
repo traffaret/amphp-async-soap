@@ -152,14 +152,18 @@ final class SoapTransport
     /**
      * Get SOAP headers to request.
      *
-     * @param int    $soap_version SOAP version.
-     * @param string $action       SOAP action.
+     * @param int|null $soap_version SOAP version.
+     * @param string   $action       SOAP action.
      *
      * @return array
      */
-    private function getSoapHeaders(int $soap_version, string $action): array
+    private function getSoapHeaders(?int $soap_version, string $action): array
     {
         $headers = [];
+
+        if (null === $soap_version) {
+            $soap_version = Options::SOAP_VERSION_1_1;
+        }
 
         if (Options::SOAP_VERSION_1_1 === $soap_version) {
             $headers[] = ['Content-Type', 'text/xml; charset="utf-8";'];
