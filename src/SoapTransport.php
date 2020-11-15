@@ -97,6 +97,13 @@ final class SoapTransport
         return $this->builder->getRequest();
     }
 
+    /**
+     * Return options.
+     *
+     * Options that was performed for the request builder.
+     *
+     * @return \Traff\Soap\Options
+     */
     public function getOptions(): Options
     {
         return $this->builder->getOptions();
