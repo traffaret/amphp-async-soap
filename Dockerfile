@@ -33,5 +33,5 @@ RUN composer check-platform-reqs \
     && composer install
 
 COPY Makefile phpcs.xml.dist phpunit.xml.dist ./
-COPY ./src .
-COPY ./tests .
+COPY ./src ./src
+COPY ./tests ./tests
