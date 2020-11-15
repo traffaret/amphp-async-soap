@@ -1,25 +1,32 @@
+[![Build Status](https://travis-ci.com/traff-ik/amphp-async-soap.svg?branch=master)](https://travis-ci.com/traff-ik/amphp-async-soap)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/eaf468bd12b05cabc04a/test_coverage)](https://codeclimate.com/github/traff-ik/amphp-async-soap/test_coverage)
 # async-soap
 Amphp soap async
 
 ```php
-$soap_options = (new Options())
-    ->withSoapVersion(Options::SOAP_VERSION_1_1);
+use Amp\Http\Client\HttpClientBuilder;
+use Traff\Soap\Options;
+use Traff\Soap\SoapTransportBuilder;
+use Traff\Soap\Wsdl\WsdlUrlFactory;
 
-$http_pool = ConnectionLimitingPool::byAuthority(5);
-$http_client = (new HttpClientBuilder)
-    ->usingPool($http_pool)
-    ->followRedirects(0)
+$http_client = HttpClientBuilder::buildDefault();
+$options = (new Options())
+    ->withSoapVersion(\SOAP_1_1)
+    ->withConnectionTimeout(20);
+
+$wsdl = yield (new WsdlUrlFactory())
+    ->createWsdl('https://cbr.ru/DailyInfoWebServ/DailyInfo.asmx?WSDL', null, $http_client)
+    ->toString();
+
+$soap_transport = (new SoapTransportBuilder())
+    ->withHttpClient($http_client)
+    ->withWsdl($wsdl)
+    ->withOptions($options)
     ->build();
 
-$wsdl = yield (new WsdlUrl(
-    'https://cbr.ru/DailyInfoWebServ/DailyInfo.asmx?WSDL',
-    new WsdlRequestBuilder($http_client, $soap_options)
-))->toString();
-
-$soap_transport = new SoapTransport(
-    new SoapMessage($wsdl, $soap_options->toArray()),
-    new SoapRequestBuilder($http_client, $soap_options)
-);
-
 $result = yield $soap_transport->callAsync('GetCursOnDate', [['On_date' => (new \DateTime('now'))->format('Y-m-d')]]);
+
+// Or
+
+$result = yield $soap_transport->GetCursOnDate(['On_date' => (new \DateTime('now'))->format('Y-m-d')]);
 ```
