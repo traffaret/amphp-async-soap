@@ -29,7 +29,7 @@
     }
   },
   "require": {
-    "php": ">=7.3,<8",
+    "php": ">=7.3",
     "ext-soap": "*",
     "amphp/http-client": "^4.3"
   },
