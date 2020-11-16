@@ -9,8 +9,8 @@ composer_cache := /usr/.composer/cache
 
 .PHONY: build
 up: Dockerfile
-	$(docker_bin) volume create vendor-data 1>/dev/null
-	$(docker_bin) volume create vendor-cache 1>/dev/null
+	$(docker_bin) volume create vendor-data 2>/dev/null
+	$(docker_bin) volume create vendor-cache 2>/dev/null
 	$(docker_bin) \
 		build --build-arg composer_cache=$(composer_cache) \
 		-t amphp-soap .
