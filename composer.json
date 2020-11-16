@@ -1,5 +1,5 @@
 {
-  "name": "traff-ik/amphp-async-soap",
+  "name": "traffaret/amphp-async-soap",
   "type": "library",
   "description": "Async soap requests with amphp",
   "license": "MIT",
