@@ -99,7 +99,7 @@ final class Options
     private $connection_timeout = 10;
 
     /**
-     * Connection timeout.
+     * Connection timeout in seconds.
      *
      * @return int
      */
@@ -293,7 +293,7 @@ final class Options
     /**
      * Return instance with specified connection timeout.
      *
-     * @param int $timeout Connection timeout.
+     * @param int $timeout Connection timeout in seconds.
      *
      * @return self
      */
