@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/traffaret/amphp-async-soap.svg?branch=master)](https://travis-ci.com/traffaret/amphp-async-soap)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/e092df69e93f1ea3b0ac/test_coverage)](https://codeclimate.com/github/traffaret/amphp-async-soap/test_coverage)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/e092df69e93f1ea3b0ac/test_coverage)](https://codeclimate.com/github/traffaret/amphp-async-soap/test_coverage)
 # async-soap
 Amphp soap async
 
