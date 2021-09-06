@@ -26,14 +26,8 @@ use Traff\Soap\RequestBuilder\SoapRequestBuilder;
  */
 final class SoapTransportBuilder
 {
-    /** @var \Traff\Soap\Message\SoapMessageFactoryInterface */
-    private $message_factory;
-
     /** @var string|null */
     private $wsdl;
-
-    /** @var \Traff\Soap\RequestBuilder\RequestBuilder */
-    private $request_builder;
 
     /** @var \Amp\Http\Client\EventListener[] */
     private $event_listeners;
@@ -45,11 +39,9 @@ final class SoapTransportBuilder
     private $options;
 
     public function __construct(
-        ?RequestBuilder $request_builder = null,
-        ?SoapMessageFactoryInterface $message_factory = null
+        private ?RequestBuilder $request_builder = null,
+        private ?SoapMessageFactoryInterface $message_factory = null
     ) {
-        $this->message_factory = $message_factory ?? new DefaultSoapMessageFactory();
-        $this->request_builder = $request_builder ?? new SoapRequestBuilder();
     }
 
     public function __destruct()

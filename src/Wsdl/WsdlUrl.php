@@ -28,12 +28,6 @@ use function Traff\Soap\plainWsdl;
  */
 final class WsdlUrl implements Wsdl
 {
-    /** @var string  */
-    private $url;
-
-    /** @var \Traff\Soap\RequestBuilder\RequestBuilder */
-    private $builder;
-
     /**
      * WsdlUrl constructor.
      *
@@ -41,10 +35,8 @@ final class WsdlUrl implements Wsdl
      * @param \Traff\Soap\RequestBuilder\RequestBuilder $builder WSDL request builder.
      *
      */
-    public function __construct(string $url, RequestBuilder $builder)
+    public function __construct(private string $url, private RequestBuilder $builder)
     {
-        $this->url = $url;
-        $this->builder = $builder;
     }
 
     /**

@@ -30,12 +30,6 @@ use function Amp\call;
  */
 final class SoapTransport
 {
-    /** @var \Traff\Soap\Message\SoapMessageInterface */
-    private $soap_message;
-
-    /** @var \Traff\Soap\RequestBuilder\RequestBuilder */
-    private $builder;
-
     /**
      * SoapTransport constructor.
      *
@@ -43,11 +37,9 @@ final class SoapTransport
      * @param \Traff\Soap\RequestBuilder\RequestBuilder $builder      Request builder.
      */
     public function __construct(
-        SoapMessageInterface $soap_message,
-        RequestBuilder $builder
+        private SoapMessageInterface $soap_message,
+        private RequestBuilder $builder
     ) {
-        $this->soap_message = $soap_message;
-        $this->builder = $builder;
     }
 
     /**
