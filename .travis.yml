@@ -1,8 +1,6 @@
 language: php
 php:
-  - "7.3"
-  - "7.4"
-  - "nightly"
+  - "8.0"
 
 env:
   global:
@@ -25,6 +23,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
+  - composer validate --strict
   - composer code-style
   - composer test:with-coverage
   - composer test -- --testsuite functional
