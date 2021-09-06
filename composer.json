@@ -11,7 +11,11 @@
   ],
   "config": {
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "8.0",
+      "ext-soap": "1"
+    }
   },
   "autoload": {
     "psr-4": {
@@ -29,7 +33,7 @@
     }
   },
   "require": {
-    "php": ">=7.3",
+    "php": "^8.0",
     "ext-soap": "*",
     "amphp/http-client": "^4.3"
   },
