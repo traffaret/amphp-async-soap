@@ -48,8 +48,8 @@
       "@code-style",
       "@test"
     ],
-    "test": "phpunit",
-    "test:with-coverage": "phpunit --testsuite unit --coverage-clover clover.xml",
+    "test": "./vendor/bin/phpunit",
+    "test:with-coverage": "./vendor/bin/phpunit --testsuite unit --coverage-clover clover.xml",
     "code-style": "./vendor/bin/phpcs",
     "code-style:fix": "./vendor/bin/phpcbf"
   }
