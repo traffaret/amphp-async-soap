@@ -1,53 +1,61 @@
 command ?=
 
-composer_bin := composer
-docker_bin := docker
+COMPOSER := composer
+DOCKER := docker
+MAKE := make
+
 docker_container := amphp-soap
 root_dir := "$$(pwd)"
 
 composer_cache := /usr/.composer/cache
 
-.PHONY: build
-up: Dockerfile
-	$(docker_bin) volume create vendor-data 2>/dev/null
-	$(docker_bin) volume create vendor-cache 2>/dev/null
-	$(docker_bin) \
-		build --build-arg composer_cache=$(composer_cache) \
-		-t amphp-soap .
-
 .PHONY: up
-run: Dockerfile
-	$(docker_bin) run --rm -it \
+up: Dockerfile
+	$(DOCKER) volume create $(docker_container)_svendor-data 2>/dev/null
+	$(DOCKER) build -t $(docker_container) .
+	$(MAKE) composer-install
+
+.PHONY: down
+down: Dockerfile
+	$(DOCKER) stop $(docker_container)
+	$(DOCKER) rm -f $(docker_container)
+
+.PHONY: run
+run:
+	$(DOCKER) run --rm -it \
    		-v $(root_dir)/src:/usr/app/src \
    		-v $(root_dir)/tests:/usr/app/tests \
    		-v $(root_dir)/phpunit.xml.dist:/usr/app/phpunit.xml.dist \
    		-v $(root_dir)/phpcs.xml.dist:/usr/app/phpcs.xml.dist \
    		-v $(root_dir)/composer.json:/usr/app/composer.json \
    		-v $(root_dir)/composer.lock:/usr/app/composer.lock \
-   		-v vendor-data:/usr/app/vendor \
-   		-v vendor-cache:$(composer_cache) \
-   		--name amphp-soap \
-   	amphp-soap $(command)
+   		-v $(docker_container)_vendor-data:/usr/app/vendor \
+   		--name $(docker_container) \
+   	$(docker_container) $(command)
 
 .PHONY: prune
-prune:
-	$(docker_bin) rmi -f amphp-soap
-	$(docker_bin) volume rm -f vendor-cache vendor-data
+prune: Dockerfile
+	$(DOCKER) rmi -f $(docker_container)
+	$(DOCKER) volume rm -f $(docker_container)_vendor-data
 
 .PHONY: composer
 composer: composer.json composer.lock
 
 .PHONY: composer-install
 composer-install: composer
-	@make run command="composer install -n"
-	$(composer_bin) install -n
+	$(MAKE) run command="composer install -n"
+	$(COMPOSER) install -n --no-scripts --no-plugins --ignore-platform-reqs 2>&1
 
 .PHONY: composer-update
 composer-update: composer
-	@make run command="composer update -n"
-	$(composer_bin) install -n
+	$(MAKE) run command="composer update -n"
+	$(COMPOSER) install -n --no-scripts --no-plugins --ignore-platform-reqs 2>&1
 
 .PHONY: composer-require
 composer-require: composer
-	@make run command="composer require -n --no-install $(command)"
-	$(composer_bin) install -n
+	$(MAKE) run command="composer require -n --no-install $(command)"
+	$(COMPOSER) install -n --no-plugins --no-scripts --ignore-platform-reqs 2>&1
+
+.PHONY: test
+test:
+	$(MAKE) run command="composer test"
