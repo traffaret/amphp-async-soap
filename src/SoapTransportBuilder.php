@@ -27,21 +27,23 @@ use Traff\Soap\RequestBuilder\SoapRequestBuilder;
 final class SoapTransportBuilder
 {
     /** @var string|null */
-    private $wsdl;
+    private ?string $wsdl = null;
 
-    /** @var \Amp\Http\Client\EventListener[] */
-    private $event_listeners;
+    /** @var \Amp\Http\Client\EventListener[]|null */
+    private ?array $event_listeners = null;
 
-    /** @var \Amp\Http\Client\DelegateHttpClient */
-    private $http_client;
+    /** @var \Amp\Http\Client\DelegateHttpClient|null */
+    private ?DelegateHttpClient $http_client = null;
 
-    /** @var \Traff\Soap\Options */
-    private $options;
+    /** @var \Traff\Soap\Options|null */
+    private ?Options $options = null;
 
     public function __construct(
         private ?RequestBuilder $request_builder = null,
         private ?SoapMessageFactoryInterface $message_factory = null
     ) {
+        $this->request_builder ??= new SoapRequestBuilder();
+        $this->message_factory ??= new DefaultSoapMessageFactory();
     }
 
     public function __destruct()
@@ -99,6 +101,10 @@ final class SoapTransportBuilder
     public function build(): SoapTransport
     {
         $request_builder = $this->request_builder;
+
+        if (null === $this->request_builder) {
+            throw new \InvalidArgumentException(\sprintf('Request builder "%s" must be provided', RequestBuilder::class));
+        }
 
         if (null !== $this->http_client) {
             $request_builder = $request_builder->withHttpClient($this->http_client);
