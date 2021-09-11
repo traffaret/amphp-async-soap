@@ -1,4 +1,4 @@
-![GitHub Actions](https://github.com/traffaret/amphp-async-soap/actions/workflows/php.yml/badge.svg)
+[![GitHub Actions](https://github.com/traffaret/amphp-async-soap/actions/workflows/php.yml/badge.svg)](https://github.com/traffaret/amphp-async-soap/actions)
 [![Build Status](https://app.travis-ci.com/traffaret/amphp-async-soap.svg?branch=master)](https://app.travis-ci.com/traffaret/amphp-async-soap)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/e092df69e93f1ea3b0ac/test_coverage)](https://codeclimate.com/github/traffaret/amphp-async-soap/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e092df69e93f1ea3b0ac/maintainability)](https://codeclimate.com/github/traffaret/amphp-async-soap/maintainability)
