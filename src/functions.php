@@ -24,8 +24,8 @@ function plainWsdl(string $wsdl): string
 {
     $prefix = 'data://text/plain;base64';
 
-    if (false === \strpos($prefix, $wsdl)) {
-        return sprintf('%s,%s', $prefix, base64_encode($wsdl));
+    if (! \str_contains($prefix, $wsdl)) {
+        return \sprintf('%s,%s', $prefix, base64_encode($wsdl));
     }
 
     return $wsdl;

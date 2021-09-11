@@ -23,19 +23,19 @@ namespace Traff\Soap\Message;
 final class SoapMessage extends \SoapClient implements SoapMessageInterface
 {
     /** @var string|null */
-    private $response;
+    private ?string $response = null;
 
     /** @var string|null */
-    private $request;
+    private ?string $request = null;
 
     /** @var string|null */
-    private $action;
+    private ?string $action = null;
 
     /** @var int|null */
-    private $version;
+    private ?int $version = null;
 
     /** @var string|null */
-    private $soap_location;
+    private ?string $soap_location = null;
 
     /** @inheritDoc */
     public function __doRequest($request, $location, $action, $version, $one_way = 0): string
@@ -97,9 +97,9 @@ final class SoapMessage extends \SoapClient implements SoapMessageInterface
     /**
      * @inheritDoc
      *
-     * @throws \SoapFault
+     * @noinspection PhpExceptionImmediatelyRethrownInspection
      */
-    public function response(string $response, string $func_name)
+    public function response(string $response, string $func_name): mixed
     {
         $this->response = $response;
 

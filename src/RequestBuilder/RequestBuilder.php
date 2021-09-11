@@ -31,17 +31,11 @@ use function Amp\call;
  */
 abstract class RequestBuilder
 {
-    /** @var \Amp\Http\Client\DelegateHttpClient */
-    private $http_client;
-
-    /** @var \Traff\Soap\Options */
-    private $options;
-
     /** @var \Amp\Http\Client\Request|null */
-    private $request;
+    private ?Request $request = null;
 
     /** @var \Amp\Http\Client\EventListener[] */
-    private $event_listeners = [];
+    private array $event_listeners = [];
 
     /**
      * Request cancellation token.
@@ -75,10 +69,12 @@ abstract class RequestBuilder
      * @param \Traff\Soap\Options|null                 $options     Options.
      * @param \Amp\Http\Client\DelegateHttpClient|null $http_client HTTP-client.
      */
-    public function __construct(?Options $options = null, ?DelegateHttpClient $http_client = null)
-    {
-        $this->http_client = $http_client ?? HttpClientBuilder::buildDefault();
-        $this->options = $options ?? new Options();
+    public function __construct(
+        private ?Options $options = null,
+        private ?DelegateHttpClient $http_client = null
+    ) {
+        $this->http_client ??= HttpClientBuilder::buildDefault();
+        $this->options ??= new Options();
     }
 
     /**

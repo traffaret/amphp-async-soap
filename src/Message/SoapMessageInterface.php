@@ -34,9 +34,10 @@ interface SoapMessageInterface
      * @param string $response  Service response.
      * @param string $func_name Service method.
      *
+     * @throws \SoapFault
      * @return mixed
      */
-    public function response(string $response, string $func_name);
+    public function response(string $response, string $func_name): mixed;
 
     /**
      * SOAP location.

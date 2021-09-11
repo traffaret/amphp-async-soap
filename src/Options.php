@@ -9,8 +9,6 @@
  * @author   Oleg Tikhonov <to@toro.one>
  */
 
-/** @noinspection PhpUnused */
-
 declare(strict_types=1);
 
 namespace Traff\Soap;
@@ -51,52 +49,52 @@ final class Options
     public const SOAP_AUTHENTICATION_DIGEST = \SOAP_AUTHENTICATION_DIGEST;
 
     /** @var string|null */
-    private $location;
+    private ?string $location = null;
 
     /** @var int */
-    private $soap_version = self::SOAP_VERSION_1_1;
+    private int $soap_version = self::SOAP_VERSION_1_1;
 
     /** @var string|null */
-    private $login;
+    private ?string $login = null;
 
     /** @var string|null */
-    private $password;
+    private ?string $password = null;
 
     /** @var \Amp\Socket\Certificate|null */
-    private $local_cert;
+    private ?Certificate $local_cert = null;
 
     /** @var int */
-    private $authentication = self::SOAP_AUTHENTICATION_BASIC;
+    private int $authentication = self::SOAP_AUTHENTICATION_BASIC;
 
     /** @var int */
-    private $compression = self::SOAP_COMPRESSION_GZIP;
+    private int $compression = self::SOAP_COMPRESSION_GZIP;
 
     /** @var string */
-    private $user_agent = 'traff-soap-async';
+    private string $user_agent = 'traff-soap-async';
 
     /** @var int */
-    private $style = self::SOAP_STYLE_RPC;
+    private int $style = self::SOAP_STYLE_RPC;
 
     /** @var string|null */
-    private $uri;
+    private ?string $uri = null;
 
     /** @var bool */
-    private $exceptions = false;
+    private bool $exceptions = false;
 
     /** @var int */
-    private $cache_wsdl = \WSDL_CACHE_NONE;
+    private int $cache_wsdl = \WSDL_CACHE_NONE;
 
     /** @var string */
-    private $encoding = self::SOAP_ENCODING_UTF_8;
+    private string $encoding = self::SOAP_ENCODING_UTF_8;
 
     /** @var int */
-    private $use = self::SOAP_USE_LITERAL;
+    private int $use = self::SOAP_USE_LITERAL;
 
     /** @var string|null */
-    private $passphrase;
+    private ?string $passphrase = null;
 
     /** @var int */
-    private $connection_timeout = 10;
+    private int $connection_timeout = 10;
 
     /**
      * Connection timeout in seconds.
